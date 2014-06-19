@@ -12,12 +12,12 @@ import org.apache.wicket.protocol.http.WebApplication;
 public class WicketApplication extends WebApplication
 {
 	/**
-	 * @see org.apache.wicket.Application#getJaws()
+	 * @see org.apache.wicket.Application#getHomePage()
 	 */
 	@Override
-	public Class<? extends WebPage> getJaws()
+	public Class<? extends WebPage> getHomePage()
 	{
-		return Jaws.class;
+		return HomePage.class;
 	}
 
 	/**

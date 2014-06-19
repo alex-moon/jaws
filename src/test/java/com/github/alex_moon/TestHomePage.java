@@ -7,7 +7,7 @@ import org.junit.Test;
 /**
  * Simple test using the WicketTester
  */
-public class TestJaws
+public class TestHomePage
 {
 	private WicketTester tester;
 
@@ -21,9 +21,9 @@ public class TestJaws
 	public void homepageRendersSuccessfully()
 	{
 		//start and render the test page
-		tester.startPage(Jaws.class);
+		tester.startPage(HomePage.class);
 
 		//assert rendered page class
-		tester.assertRenderedPage(Jaws.class);
+		tester.assertRenderedPage(HomePage.class);
 	}
 }
