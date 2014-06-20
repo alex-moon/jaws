@@ -11,6 +11,7 @@
 	<name>jaws</name>
 	<description>Killer Web Apps with Java and AWS</description>
 	<properties>
+		<aws.version>1.7.13</aws.version>
 		<wicket.version>6.15.0</wicket.version>
 		<jetty.version>7.6.13.v20130916</jetty.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -31,6 +32,11 @@
 			<version>${wicket.version}</version>
 		</dependency>
 		-->
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk</artifactId>
+			<version>${aws.version}</version>
+		</dependency>
 
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
 		<dependency>
