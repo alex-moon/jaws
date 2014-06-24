@@ -13,6 +13,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 public class WicketApplication extends WebApplication
 {
 	private static DynamoDBMapper mapper;
+
 	/**
 	 * @see org.apache.wicket.Application#getHomePage()
 	 */
@@ -35,8 +36,7 @@ public class WicketApplication extends WebApplication
 
 	public static DynamoDBMapper getMapper() {
 		if (mapper == null) {
-			AWSCredentialsProvider credentials = new ProfileCredentialsProvider();
-			AmazonDynamoDBClient client = new AmazonDynamoDBClient(credentials);
+			AmazonDynamoDBClient client = new AmazonDynamoDBClient();
 			Region ireland = Region.getRegion(Regions.EU_WEST_1);
 			client.setRegion(ireland);
 
