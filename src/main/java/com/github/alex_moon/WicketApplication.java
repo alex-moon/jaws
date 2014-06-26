@@ -10,40 +10,39 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
-public class WicketApplication extends WebApplication
-{
-	private static DynamoDBMapper mapper;
-	private static AmazonDynamoDBClient client;
+public class WicketApplication extends WebApplication {
+    private static DynamoDBMapper mapper;
+    private static AmazonDynamoDBClient client;
 
-	@Override
-	public Class<? extends WebPage> getHomePage()
-	{
-		return HomePage.class;
-	}
-	
-	public static AmazonDynamoDBClient getClient() {
-		if (client == null) {
-			try {
-				// Dev uses profile credentials
-				AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
-				client = new AmazonDynamoDBClient(credentials);
-			} catch (IllegalArgumentException e) {
-				// Live uses EC2 service role
-				client = new AmazonDynamoDBClient();
-			}
+    @Override
+    public Class<? extends WebPage> getHomePage() {
+        return HomePage.class;
+    }
 
-			Region ireland = Region.getRegion(Regions.EU_WEST_1);
-			client.setRegion(ireland);
-		}
-		
-		return client;
-	}
+    public static AmazonDynamoDBClient getClient() {
+        if (client == null) {
+            try {
+                // Dev uses profile credentials
+                AWSCredentials credentials = new ProfileCredentialsProvider()
+                        .getCredentials();
+                client = new AmazonDynamoDBClient(credentials);
+            } catch (IllegalArgumentException e) {
+                // Live uses EC2 service role
+                client = new AmazonDynamoDBClient();
+            }
 
-	public static DynamoDBMapper getMapper() {
-		if (mapper == null) {
-			mapper = new DynamoDBMapper(getClient());
-		}
+            Region ireland = Region.getRegion(Regions.EU_WEST_1);
+            client.setRegion(ireland);
+        }
 
-		return mapper;
-	}
+        return client;
+    }
+
+    public static DynamoDBMapper getMapper() {
+        if (mapper == null) {
+            mapper = new DynamoDBMapper(getClient());
+        }
+
+        return mapper;
+    }
 }

@@ -19,21 +19,22 @@ import org.apache.wicket.util.value.ValueMap;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
 public class HomePage extends WebPage {
-	private static final List<Text> TextList = Collections.synchronizedList(new ArrayList<Text>());
+    private static final List<Text> TextList = Collections
+            .synchronizedList(new ArrayList<Text>());
 
-	public HomePage(final PageParameters parameters) {
-		super(parameters);
+    public HomePage(final PageParameters parameters) {
+        super(parameters);
 
-		DynamoDBMapper mapper = WicketApplication.getMapper();
+        DynamoDBMapper mapper = WicketApplication.getMapper();
 
-		Term term = mapper.load(Term.class, "radical");
+        /*
+         * Term term = mapper.load(Term.class, "radical");
+         * 
+         * if (term == null) { add(new Label("killer", "term not found :(")); }
+         * else { add(new Label("killer", term.toString())); }
+         */
+        add(new Label("killer", "db disabled"));
 
-		if (term == null) {
-			add(new Label("killer", "term not found :("));
-		} else {
-			add(new Label("killer", term.toString()));
-		}
-		
         add(new TextForm("TextForm"));
 
         add(new PropertyListView<Text>("Texts", TextList) {
@@ -44,7 +45,7 @@ public class HomePage extends WebPage {
             }
         }).setVersioned(false);
     }
-	
+
     public final class TextForm extends Form<ValueMap> {
         public TextForm(final String id) {
             super(id, new CompoundPropertyModel<ValueMap>(new ValueMap()));
@@ -58,8 +59,10 @@ public class HomePage extends WebPage {
             Text Text = new Text();
 
             Text.setDate(new Date());
-            Text.setTextString((String)values.get("textString"));
+            Text.setTextString((String) values.get("textString"));
             TextList.add(0, Text);
+
+            // @todo call to Trim
 
             values.put("textString", "");
         }
