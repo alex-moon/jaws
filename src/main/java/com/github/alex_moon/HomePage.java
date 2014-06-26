@@ -2,8 +2,8 @@ package com.github.alex_moon;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
@@ -57,7 +57,7 @@ public class HomePage extends WebPage {
 
             Text Text = new Text();
 
-            Text.setDate(new Date());
+            Text.setUuid(UUID.randomUUID());
             Text.setTextString((String) values.get("textString"));
             TextList.add(0, Text);
 

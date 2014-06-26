@@ -1,19 +1,19 @@
 package com.github.alex_moon;
 
-import java.util.Date;
+import java.util.UUID;
 
 import org.apache.wicket.util.io.IClusterable;
 
 public class Text implements IClusterable {
     private String textString;
-    private Date date = new Date();
+    private UUID uuid = UUID.randomUUID();
 
     public Text() {
     }
 
     public Text(Text text) {
         this.textString = text.textString;
-        this.date = text.date;
+        this.uuid = text.uuid;
     }
 
     public String getTextString() {
@@ -24,15 +24,15 @@ public class Text implements IClusterable {
         this.textString = textString;
     }
 
-    public Date getDate() {
-        return date;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public String toString() {
-        return "[Text " + date + "]";
+        return "[Text " + uuid + "]";
     }
 }
