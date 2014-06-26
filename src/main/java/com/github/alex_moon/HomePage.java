@@ -19,8 +19,7 @@ import org.apache.wicket.util.value.ValueMap;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
 public class HomePage extends WebPage {
-    private static final List<Text> TextList = Collections
-            .synchronizedList(new ArrayList<Text>());
+    private static final List<Text> TextList = Collections.synchronizedList(new ArrayList<Text>());
 
     public HomePage(final PageParameters parameters) {
         super(parameters);

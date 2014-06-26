@@ -23,8 +23,7 @@ public class WicketApplication extends WebApplication {
         if (client == null) {
             try {
                 // Dev uses profile credentials
-                AWSCredentials credentials = new ProfileCredentialsProvider()
-                        .getCredentials();
+                AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
                 client = new AmazonDynamoDBClient(credentials);
             } catch (IllegalArgumentException e) {
                 // Live uses EC2 service role
