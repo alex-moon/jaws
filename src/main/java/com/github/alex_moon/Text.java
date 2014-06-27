@@ -3,6 +3,7 @@ package com.github.alex_moon;
 import java.util.UUID;
 
 import org.apache.wicket.util.io.IClusterable;
+import org.json.JSONObject;
 
 public class Text implements IClusterable {
     private String textString;
@@ -34,5 +35,12 @@ public class Text implements IClusterable {
 
     public String toString() {
         return "[Text " + uuid + "]";
+    }
+    
+    public JSONObject serialise() {
+        JSONObject result = new JSONObject();
+        result.put("text", textString);
+        result.put("uuid", uuid.toString());
+        return result;
     }
 }

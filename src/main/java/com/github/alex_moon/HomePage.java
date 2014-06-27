@@ -19,7 +19,7 @@ import org.apache.wicket.util.value.ValueMap;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
 public class HomePage extends WebPage {
-    private static final List<Text> TextList = Collections.synchronizedList(new ArrayList<Text>());
+    private static final List<Text> textList = Collections.synchronizedList(new ArrayList<Text>());
 
     public HomePage(final PageParameters parameters) {
         super(parameters);
@@ -36,7 +36,7 @@ public class HomePage extends WebPage {
 
         add(new TextForm("TextForm"));
 
-        add(new PropertyListView<Text>("Texts", TextList) {
+        add(new PropertyListView<Text>("Texts", textList) {
             @Override
             public void populateItem(final ListItem<Text> listItem) {
                 listItem.add(new Label("date"));
@@ -55,13 +55,15 @@ public class HomePage extends WebPage {
         public final void onSubmit() {
             ValueMap values = getModelObject();
 
-            Text Text = new Text();
+            Text text = new Text();
+            
+            UUID uuid = UUID.randomUUID();
 
-            Text.setUuid(UUID.randomUUID());
-            Text.setTextString((String) values.get("textString"));
-            TextList.add(0, Text);
+            text.setUuid(uuid);
+            text.setTextString((String) values.get("textString"));
+            textList.add(0, text);
 
-            // @todo call to Trim - jsonify Text and HTTPClient.post()
+            new Trim().putText(text);
 
             values.put("textString", "");
         }
