@@ -61,7 +61,7 @@ public class HomePage extends WebPage {
             Text.setTextString((String) values.get("textString"));
             TextList.add(0, Text);
 
-            // @todo call to Trim
+            // @todo call to Trim - jsonify Text and HTTPClient.post()
 
             values.put("textString", "");
         }
