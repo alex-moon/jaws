@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
@@ -11,11 +10,7 @@
 	<name>jaws</name>
 	<description>Killer Web Apps with Java and AWS</description>
 	<properties>
-	    <target_dir>/opt/play/</target_dir>
-	    <httpcomponents.version>4.3.4</httpcomponents.version>
-        <beanstalker.version>1.3.1</beanstalker.version>
-		<aws.version>1.7.13</aws.version>
-		<wicket.version>6.15.0</wicket.version>
+		<target_dir>/opt/play/</target_dir>
 		<jetty.version>7.6.13.v20130916</jetty.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- allowed values: R7, 1.0, 1.5, 2.0 or none -->
@@ -25,30 +20,30 @@
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-core</artifactId>
-			<version>${wicket.version}</version>
+			<version>6.16.0</version>
 		</dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient-osgi</artifactId>
+            <version>4.2.5</version>
+        </dependency>
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-java-sdk</artifactId>
-			<version>${aws.version}</version>
+			<version>1.8.1</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.apache.httpcomponents</groupId>
-		    <artifactId>httpclient-osgi</artifactId>
-		    <version>${httpcomponents.version}</version>
+			<groupId>br.com.ingenieux</groupId>
+			<artifactId>beanstalk-maven-plugin</artifactId>
+			<version>1.3.1</version>
+			<type>maven-plugin</type>
 		</dependency>
-        <dependency>
-            <groupId>br.com.ingenieux</groupId>
-            <artifactId>beanstalk-maven-plugin</artifactId>
-            <version>${beanstalker.version}</version>
-            <type>maven-plugin</type>
-        </dependency>
 		<dependency>
-		    <groupId>org.json</groupId>
-		    <artifactId>json</artifactId>
-		    <version>20140107</version>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20140107</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
@@ -101,11 +96,11 @@
 			</testResource>
 		</testResources>
 		<plugins>
-            <plugin>
-                <groupId>br.com.ingenieux</groupId>
-                <artifactId>beanstalk-maven-plugin</artifactId>
-                <version>${beanstalker.version}</version>
-            </plugin>
+			<plugin>
+				<groupId>br.com.ingenieux</groupId>
+				<artifactId>beanstalk-maven-plugin</artifactId>
+				<version>1.3.1</version>
+			</plugin>
 			<plugin>
 				<inherited>true</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -147,7 +142,7 @@
 				<configuration>
 					<downloadSources>true</downloadSources>
 					<wtpversion>${wtp.version}</wtpversion>
-                    <outputDirectory>${target_dir}</outputDirectory>
+					<outputDirectory>${target_dir}</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -165,4 +160,4 @@
 			</snapshots>
 		</repository>
 	</repositories>
-	</project>
+</project>

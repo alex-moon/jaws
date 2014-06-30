@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 public class Trim {
     // private String url = "http://trim.elasticbeanstalk.com/text/json/";  // @todo config
-    private String url = "http://localhost/trim/text/json/";
+    private String url = "http://localhost:8080/trim/text/json/";
 
     public String putText(Text text) {
         try {

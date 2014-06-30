@@ -24,9 +24,8 @@ public class HomePage extends WebPage {
     public HomePage(final PageParameters parameters) {
         super(parameters);
 
-        DynamoDBMapper mapper = WicketApplication.getMapper();
-
         /*
+         * DynamoDBMapper mapper = WicketApplication.getMapper();
          * Term term = mapper.load(Term.class, "radical");
          * 
          * if (term == null) { add(new Label("killer", "term not found :(")); }
