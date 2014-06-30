@@ -39,7 +39,7 @@ public class HomePage extends WebPage {
         add(new PropertyListView<Text>("Texts", textList) {
             @Override
             public void populateItem(final ListItem<Text> listItem) {
-                listItem.add(new Label("date"));
+                listItem.add(new Label("uuid"));
                 listItem.add(new MultiLineLabel("textString"));
             }
         }).setVersioned(false);
