@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.wicket.Application;
+import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
+import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
@@ -13,16 +16,23 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.value.ValueMap;
-
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
 public class HomePage extends WebPage {
     private static final List<Text> textList = Collections.synchronizedList(new ArrayList<Text>());
+    
+    @Override
+    protected void onConfigure() {
+       AuthenticatedWebApplication app = (AuthenticatedWebApplication)Application.get();
+       //if user is not signed in, redirect her to sign in page
+       if (!AuthenticatedWebSession.get().isSignedIn()) {
+          app.restartResponseAtSignInPage();
+       }
+    }
 
-    public HomePage(final PageParameters parameters) {
-        super(parameters);
+    @Override
+    protected void onInitialize() {
+       super.onInitialize();
 
         /*
          * DynamoDBMapper mapper = WicketApplication.getMapper();

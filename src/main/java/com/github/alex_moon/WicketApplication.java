@@ -1,7 +1,8 @@
 package com.github.alex_moon;
 
+import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
+import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.protocol.http.WebApplication;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
@@ -10,7 +11,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
-public class WicketApplication extends WebApplication {
+public class WicketApplication extends AuthenticatedWebApplication {
     private static DynamoDBMapper mapper;
     private static AmazonDynamoDBClient client;
 
@@ -18,6 +19,12 @@ public class WicketApplication extends WebApplication {
     public Class<? extends WebPage> getHomePage() {
         return HomePage.class;
     }
+    
+    @Override
+    protected Class<? extends AbstractAuthenticatedWebSession> getWebSessionClass(){ return BasicAuthenticationSession.class; }
+
+    @Override
+    protected Class<? extends WebPage> getSignInPageClass() { return SignInPage.class; }
 
     public static AmazonDynamoDBClient getClient() {
         if (client == null) {
