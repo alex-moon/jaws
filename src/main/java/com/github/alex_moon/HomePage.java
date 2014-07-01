@@ -43,9 +43,9 @@ public class HomePage extends WebPage {
          */
         add(new Label("killer", "db disabled"));
 
-        add(new TextForm("TextForm"));
+        add(new TextForm("textForm"));
 
-        add(new PropertyListView<Text>("Texts", textList) {
+        add(new PropertyListView<Text>("texts", textList) {
             @Override
             public void populateItem(final ListItem<Text> listItem) {
                 listItem.add(new Label("uuid"));

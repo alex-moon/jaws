@@ -16,7 +16,7 @@ public class SignInPage extends WebPage {
    protected void onInitialize() {
        super.onInitialize();
 
-        StatelessForm form = new StatelessForm("form") {
+        StatelessForm form = new StatelessForm("signinForm") {
             @Override
             protected void onSubmit() {
                 if(Strings.isEmpty(username)) {
