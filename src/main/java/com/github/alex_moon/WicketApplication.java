@@ -21,10 +21,14 @@ public class WicketApplication extends AuthenticatedWebApplication {
     }
     
     @Override
-    protected Class<? extends AbstractAuthenticatedWebSession> getWebSessionClass(){ return BasicAuthenticationSession.class; }
+    protected Class<? extends AbstractAuthenticatedWebSession> getWebSessionClass(){
+        return BasicAuthenticationSession.class;
+    }
 
     @Override
-    protected Class<? extends WebPage> getSignInPageClass() { return SignInPage.class; }
+    protected Class<? extends WebPage> getSignInPageClass() {
+        return SignInPage.class;
+    }
 
     public static AmazonDynamoDBClient getClient() {
         if (client == null) {

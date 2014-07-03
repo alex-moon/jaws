@@ -14,7 +14,8 @@
 		3) context specific <context-param>
 
 		The value might be either "development" (reloading when templates change) or 
-		"deployment". If no configuration is found, "development" is the default. -->
+		"deployment". If no configuration is found, "development" is the default.
+	-->
 
 	<filter>
 		<filter-name>wicket.jaws</filter-name>
