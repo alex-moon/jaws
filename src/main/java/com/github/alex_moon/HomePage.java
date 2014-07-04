@@ -18,30 +18,32 @@ import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.util.value.ValueMap;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+
 public class HomePage extends WebPage {
     private static final List<Text> textList = Collections.synchronizedList(new ArrayList<Text>());
-    
+
     @Override
     protected void onConfigure() {
-       AuthenticatedWebApplication app = (AuthenticatedWebApplication)Application.get();
-       //if user is not signed in, redirect her to sign in page
-       if (!AuthenticatedWebSession.get().isSignedIn()) {
-          app.restartResponseAtSignInPage();
-       }
+        AuthenticatedWebApplication app = (AuthenticatedWebApplication) Application.get();
+        // if user is not signed in, redirect her to sign in page
+        if (!AuthenticatedWebSession.get().isSignedIn()) {
+            app.restartResponseAtSignInPage();
+        }
     }
 
     @Override
     protected void onInitialize() {
-       super.onInitialize();
+        super.onInitialize();
 
-        /*
-         * DynamoDBMapper mapper = WicketApplication.getMapper();
-         * Term term = mapper.load(Term.class, "radical");
-         * 
-         * if (term == null) { add(new Label("killer", "term not found :(")); }
-         * else { add(new Label("killer", term.toString())); }
-         */
-        add(new Label("killer", "db disabled"));
+        DynamoDBMapper mapper = WicketApplication.getMapper();
+        Term term = mapper.load(Term.class, "radical");
+
+        if (term == null) {
+            add(new Label("killer", "term not found :("));
+        } else {
+            add(new Label("killer", term.toString()));
+        }
 
         add(new TextForm("textForm"));
 
@@ -65,7 +67,7 @@ public class HomePage extends WebPage {
             ValueMap values = getModelObject();
 
             Text text = new Text();
-            
+
             UUID uuid = UUID.randomUUID();
 
             text.setUuid(uuid);
