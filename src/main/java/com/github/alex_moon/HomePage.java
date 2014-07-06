@@ -36,15 +36,6 @@ public class HomePage extends WebPage {
     protected void onInitialize() {
         super.onInitialize();
 
-        DynamoDBMapper mapper = WicketApplication.getMapper();
-        Term term = mapper.load(Term.class, "radical");
-
-        if (term == null) {
-            add(new Label("killer", "term not found :("));
-        } else {
-            add(new Label("killer", term.toString()));
-        }
-
         add(new TextForm("textForm"));
 
         add(new PropertyListView<Text>("texts", textList) {
