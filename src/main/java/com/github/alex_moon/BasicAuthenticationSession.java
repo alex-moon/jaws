@@ -7,11 +7,13 @@ import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.request.Request;
 
 public class BasicAuthenticationSession extends AuthenticatedWebSession {
-    String envUsername = System.getProperty("jaws.username", "admin");
-    String envPassword = System.getProperty("jaws.password", "fmY7umcnXN1IxF0lt1wH");
+    String envUsername;
+    String envPassword;
 
     public BasicAuthenticationSession(Request request) {
         super(request);
+        envUsername = System.getProperty("nonexist.jaws.username", "admin");
+        envPassword = System.getProperty("nonexist.jaws.password", "fmY7umcnXN1IxF0lt1wH");
     }
 
     @Override

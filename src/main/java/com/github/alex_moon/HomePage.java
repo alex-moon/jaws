@@ -16,6 +16,7 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.util.io.IClusterable;
 import org.apache.wicket.util.value.ValueMap;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
@@ -47,6 +48,20 @@ public class HomePage extends WebPage {
 
         add(new TextForm("textForm"));
 
+        List<Property> properties = new ArrayList<Property>();
+        for (Object objkey : System.getProperties().keySet()) {
+            String key = (String) objkey;
+            properties.add(new Property(key, System.getProperty(key)));
+        }
+        
+        add(new PropertyListView<Property>("properties", properties) {
+            @Override
+            public void populateItem(final ListItem<Property> listItem) {
+                listItem.add(new Label("key"));
+                listItem.add(new Label("value"));
+            }
+        }).setVersioned(false);
+        
         add(new PropertyListView<Text>("texts", textList) {
             @Override
             public void populateItem(final ListItem<Text> listItem) {
@@ -54,6 +69,32 @@ public class HomePage extends WebPage {
                 listItem.add(new MultiLineLabel("textString"));
             }
         }).setVersioned(false);
+    }
+    
+    public final class Property implements IClusterable {
+        private String key;
+        private String value;
+        
+        public Property(String key, String value) {
+            this.key = key;
+            this.value = value;
+        }
+        
+        public String getKey() {
+            return key;
+        }
+        
+        public String getValue() {
+            return value;
+        }
+        
+        public void setKey(String key) {
+            this.key = key;
+        }
+        
+        public void setValue(String value) {
+            this.value = value;
+        }
     }
 
     public final class TextForm extends Form<ValueMap> {
