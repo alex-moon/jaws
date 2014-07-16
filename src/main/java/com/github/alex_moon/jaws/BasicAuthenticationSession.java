@@ -18,6 +18,10 @@ public class BasicAuthenticationSession extends AuthenticatedWebSession {
     public boolean authenticate(String username, String password) {
         return username.equals(envUsername) && password.equals(envPassword);
     }
+    
+    public void signIn() {
+        signIn(true);
+    }
 
     @Override
     public Roles getRoles() {

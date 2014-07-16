@@ -1,5 +1,6 @@
 package com.github.alex_moon.jaws;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -12,25 +13,31 @@ import org.apache.wicket.request.Response;
 import org.apache.wicket.request.http.WebRequest;
 import org.apache.wicket.request.http.WebResponse;
 
-import com.amazonaws.services.identitymanagement.model.User;
-
 public class SessionHandler {
     private final int expiryTimeInDays = 365;
     private final String cookieName = "id";
+    private List<BasicAuthenticationSession> sessions = new ArrayList<BasicAuthenticationSession>();
     
-    public WebSession createSession(Request request, Response response) {
-        BasicAuthenticationSession session = new BasicAuthenticationSession(request);
-
+    public BasicAuthenticationSession getSession(Request request, Response response) {
         Cookie cookie = loadCookie(request);
-
-        if(cookie == null) {
-            UUID uuid = UUID.randomUUID();
-            saveCookie(response, uuid.toString());
+        if (cookie != null) {
+            for (BasicAuthenticationSession session : sessions) {
+                if (session.getAttribute(cookieName) == cookie.getValue()) {
+                    session.signIn();
+                    return session;
+                }
+            }
         }
-        
-        // @todo watch list
-        session.setAttribute("lol", "pretty cool");
+        return createSession(request, response);
+    }
+    
+    public BasicAuthenticationSession createSession(Request request, Response response) {
+        UUID uuid = UUID.randomUUID();
+        saveCookie(response, uuid.toString());
 
+        BasicAuthenticationSession session = new BasicAuthenticationSession(request);
+        session.setAttribute(cookieName, uuid);
+        sessions.add(session);
         return session;
     }
 
@@ -55,5 +62,4 @@ public class SessionHandler {
         cookie.setMaxAge((int) TimeUnit.DAYS.toSeconds(expiryTimeInDays));
         ((WebResponse)response).addCookie(cookie);
     }
-
 }

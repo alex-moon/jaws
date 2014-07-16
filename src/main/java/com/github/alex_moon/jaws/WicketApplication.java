@@ -14,6 +14,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 public class WicketApplication extends AuthenticatedWebApplication {
     private static DynamoDBMapper mapper;
     private static AmazonDynamoDBClient client;
+    private static SessionHandler sessionHandler;
 
     @Override
     public Class<? extends WebPage> getHomePage() {
@@ -28,6 +29,14 @@ public class WicketApplication extends AuthenticatedWebApplication {
     @Override
     protected Class<? extends WebPage> getSignInPageClass() {
         return SignInPage.class;
+    }
+    
+    public static SessionHandler getSessionHandler() {
+        if (sessionHandler == null) {
+            sessionHandler = new SessionHandler();
+        }
+
+        return sessionHandler;
     }
 
     public static AmazonDynamoDBClient getClient() {

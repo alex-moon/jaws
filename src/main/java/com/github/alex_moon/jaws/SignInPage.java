@@ -1,7 +1,6 @@
 package com.github.alex_moon.jaws;
 
-import java.util.UUID;
-
+import org.apache.wicket.Session;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.PasswordTextField;
@@ -16,7 +15,12 @@ public class SignInPage extends WebPage {
 
    @Override
    protected void onInitialize() {
-       super.onInitialize();
+        super.onInitialize();
+        
+        BasicAuthenticationSession session = WicketApplication.getSessionHandler().getSession(getRequest(), getResponse());
+        if (session.isSignedIn()) {
+            continueToOriginalDestination();
+        }
 
         StatelessForm form = new StatelessForm("signinForm") {
             @Override
@@ -29,7 +33,7 @@ public class SignInPage extends WebPage {
 
                 //if authentication succeeds set the cookie and redirect user to the requested page
                 if(authResult) {
-                    new SessionHandler().createSession(getRequest(), getResponse());
+                    WicketApplication.getSessionHandler().createSession(getRequest(), getResponse());
                     continueToOriginalDestination();
                 }
             }
