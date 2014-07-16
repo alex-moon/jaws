@@ -1,4 +1,4 @@
-package com.github.alex_moon;
+package com.github.alex_moon.jaws;
 
 import java.util.ArrayList;
 import java.util.Collections;

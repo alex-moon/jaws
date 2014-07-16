@@ -1,4 +1,4 @@
-package com.github.alex_moon;
+package com.github.alex_moon.jaws;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;

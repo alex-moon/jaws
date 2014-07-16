@@ -1,4 +1,4 @@
-package com.github.alex_moon;
+package com.github.alex_moon.jaws;
 
 import org.apache.http.client.fluent.Request;
 import org.apache.http.entity.ContentType;

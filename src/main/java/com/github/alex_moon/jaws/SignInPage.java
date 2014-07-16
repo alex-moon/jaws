@@ -1,12 +1,14 @@
-package com.github.alex_moon;
+package com.github.alex_moon.jaws;
 
+import java.util.UUID;
+
+import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.util.string.Strings;
-import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 
 public class SignInPage extends WebPage {
    private String username;
@@ -24,8 +26,12 @@ public class SignInPage extends WebPage {
                 }
 
                 boolean authResult = AuthenticatedWebSession.get().signIn(username, password);
-                //if authentication succeeds redirect user to the requested page
-                if(authResult) continueToOriginalDestination();
+
+                //if authentication succeeds set the cookie and redirect user to the requested page
+                if(authResult) {
+                    new SessionHandler().createSession(getRequest(), getResponse());
+                    continueToOriginalDestination();
+                }
             }
         };
         

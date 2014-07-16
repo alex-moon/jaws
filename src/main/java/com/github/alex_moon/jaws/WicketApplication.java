@@ -1,4 +1,4 @@
-package com.github.alex_moon;
+package com.github.alex_moon.jaws;
 
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
