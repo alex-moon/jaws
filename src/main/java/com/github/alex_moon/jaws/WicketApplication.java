@@ -20,9 +20,9 @@ public class WicketApplication extends AuthenticatedWebApplication {
     public Class<? extends WebPage> getHomePage() {
         return HomePage.class;
     }
-    
+
     @Override
-    protected Class<? extends AbstractAuthenticatedWebSession> getWebSessionClass(){
+    protected Class<? extends AbstractAuthenticatedWebSession> getWebSessionClass() {
         return BasicAuthenticationSession.class;
     }
 
@@ -30,7 +30,7 @@ public class WicketApplication extends AuthenticatedWebApplication {
     protected Class<? extends WebPage> getSignInPageClass() {
         return SignInPage.class;
     }
-    
+
     public static SessionHandler getSessionHandler() {
         if (sessionHandler == null) {
             sessionHandler = new SessionHandler();

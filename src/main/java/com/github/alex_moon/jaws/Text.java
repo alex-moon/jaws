@@ -36,7 +36,7 @@ public class Text implements IClusterable {
     public String toString() {
         return "[Text " + uuid + "]";
     }
-    
+
     public JSONObject serialise() {
         JSONObject result = new JSONObject();
         result.put("text", textString);

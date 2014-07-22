@@ -15,10 +15,10 @@ import org.apache.wicket.request.http.WebResponse;
 
 public class SessionHandler {
     private final int expiryTimeInDays = 365;
-    private final String cookieName = "id";
+    private final String cookieName = "cookie";
     private List<BasicAuthenticationSession> sessions = new ArrayList<BasicAuthenticationSession>();
-    
-    public BasicAuthenticationSession getSession(Request request, Response response) {
+
+    public BasicAuthenticationSession getSessionFromCookie(Request request, Response response) {
         Cookie cookie = loadCookie(request);
         if (cookie != null) {
             for (BasicAuthenticationSession session : sessions) {
@@ -30,7 +30,7 @@ public class SessionHandler {
         }
         return createSession(request, response);
     }
-    
+
     public BasicAuthenticationSession createSession(Request request, Response response) {
         UUID uuid = UUID.randomUUID();
         saveCookie(response, uuid.toString());
@@ -49,7 +49,7 @@ public class SessionHandler {
         }
 
         for (Cookie cookie : cookies) {
-            if(cookie.getName().equals(cookieName)) {
+            if (cookie.getName().equals(cookieName)) {
                 return cookie;
             }
         }
@@ -60,6 +60,6 @@ public class SessionHandler {
     public void saveCookie(Response response, String cookieValue) {
         Cookie cookie = new Cookie(cookieName, cookieValue);
         cookie.setMaxAge((int) TimeUnit.DAYS.toSeconds(expiryTimeInDays));
-        ((WebResponse)response).addCookie(cookie);
+        ((WebResponse) response).addCookie(cookie);
     }
 }

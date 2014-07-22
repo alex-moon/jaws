@@ -10,10 +10,7 @@ public class Trim {
     public String putText(Text text) {
         try {
             JSONObject json = text.serialise();
-            String response = Request.Post(url)
-                            .bodyString(json.toString(), ContentType.APPLICATION_JSON)
-                            .execute().returnContent()
-                            .asString();
+            String response = Request.Post(url).bodyString(json.toString(), ContentType.APPLICATION_JSON).execute().returnContent().asString();
             return response;
         } catch (Exception e) {
             e.printStackTrace();

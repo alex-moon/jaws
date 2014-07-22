@@ -2,29 +2,50 @@
 <html xmlns:wicket="http://wicket.apache.org/">
 <head>
     <title>JAWS - Killer Web Apps with Java and AWS</title>
-    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" type="text/css" href="bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-  <h2>Jaws</h2>
-
-  <form wicket:id="textForm">
-    Add a new text:
-    <p>
-    <textarea wicket:id="textString">This is a text</textarea>
-    <p>
-    <input type="submit" value="Submit" id="formsubmit"/>
-  </form>
-  <p/>
-  <span wicket:id="texts">
-    <p>
-        <span wicket:id="uuid">uuid goes here</span>
-        <span wicket:id="textString">text goes here</span>
-    </p>
-  </span>
-  <wicket:remove>
-    <p>
-    	This text won't be seen on the final page lol
-    </p>
-  </wicket:remove>
+  <div class="bg-success info" wicket:id="info"></div>
+  <div class="panel">
+      <div class="row">
+          <div class="col-md-6">
+              <form role="form" wicket:id="watchForm">
+                <h2>Jaws</h2>
+                <div class="form-group">
+                    <label class="control-label" for="watch">Watch a term:</label>
+                    <input class="form-control" id="watch" wicket:id="watchTerm" />
+                </div>
+                <input type="submit" class="btn btn-primary" value="Submit"/>
+              </form>
+          </div>
+          <div class="col-md-6" style="text-align: right">
+              <h3>Currently Watching</h3>
+              <ul wicket:id="watching">
+                <li wicket:id="termString"></li>
+              </ul>
+          </div>
+      </div>
+  </div>
+  <div class="panel">
+      <h3>Dashboard</h3>
+      <table class="table">
+        <tr wicket:id="dashboard">
+            <td wicket:id="termString"></td>
+            <td wicket:id="first"></td>
+            <td wicket:id="second"></td>
+            <td wicket:id="third"></td>
+        </tr>
+      </table>
+    </div>
+    <div class="panel">
+      <form role="form" wicket:id="textForm">
+        <div class="form-group">
+            <label for="addText">Add a new text</label>
+            <textarea class="form-control" wicket:id="textString"></textarea>
+        </div>
+        <input class="btn btn-primary" type="submit" value="Submit"/>
+      </form>
+  </div>
 </body>
 </html>

@@ -6,28 +6,30 @@ import java.util.List;
 import java.util.UUID;
 
 import org.apache.wicket.Application;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.basic.MultiLineLabel;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.PropertyListView;
+import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.markup.repeater.data.DataView;
+import org.apache.wicket.markup.repeater.data.ListDataProvider;
+import org.apache.wicket.model.AbstractReadOnlyModel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.util.value.ValueMap;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-
 public class HomePage extends WebPage {
-    private static final List<Text> textList = Collections.synchronizedList(new ArrayList<Text>());
-
     @Override
     protected void onConfigure() {
         AuthenticatedWebApplication app = (AuthenticatedWebApplication) Application.get();
         // if user is not signed in, redirect her to sign in page
-        if (!AuthenticatedWebSession.get().isSignedIn()) {
+        if (!BasicAuthenticationSession.get().isSignedIn()) {
             app.restartResponseAtSignInPage();
         }
     }
@@ -36,15 +38,59 @@ public class HomePage extends WebPage {
     protected void onInitialize() {
         super.onInitialize();
 
-        add(new TextForm("textForm"));
+        add(new WatchForm("watchForm"));
 
-        add(new PropertyListView<Text>("texts", textList) {
-            @Override
-            public void populateItem(final ListItem<Text> listItem) {
-                listItem.add(new Label("uuid"));
-                listItem.add(new MultiLineLabel("textString"));
+        add(new FeedbackPanel("info"));
+        add(new ListView<String>("watching", ((BasicAuthenticationSession) getSession()).getWatching()) {
+            public void populateItem(final ListItem<String> item) {
+                final String termString = item.getModelObject();
+                item.add(new Label("termString", termString));
             }
-        }).setVersioned(false);
+        });
+
+        List<Term> watchTerms = Term.getWatchTerms((BasicAuthenticationSession) getSession());
+        add(new Dashboard("dashboard", watchTerms));
+
+        add(new TextForm("textForm"));
+    }
+
+    public final class Dashboard extends DataView<Term> {        
+        public Dashboard(String id, final List<Term> watchTerms) {
+            super(id, new ListDataProvider<Term>(watchTerms));
+        }
+
+        @Override
+        protected void populateItem(final Item<Term> item) {
+            Term term = item.getModelObject();
+            item.add(new Label("termString", term.getTermString()));
+            item.add(new Label("first", term.getFirst()));
+            item.add(new Label("second", term.getSecond()));
+            item.add(new Label("third", term.getThird()));
+            item.add(AttributeModifier.replace("class", new AbstractReadOnlyModel<String>() {
+                @Override
+                public String getObject() {
+                    return (item.getIndex() % 2 == 1) ? "even" : "odd";
+                }
+            }));
+        }
+    }
+
+    public final class WatchForm extends Form<ValueMap> {
+        public WatchForm(final String id) {
+            super(id, new CompoundPropertyModel<ValueMap>(new ValueMap()));
+            add(new TextField<String>("watchTerm").setType(String.class));
+        }
+
+        @Override
+        public final void onSubmit() {
+            ValueMap values = getModelObject();
+
+            String watchTerm = (String) values.get("watchTerm");
+
+            ((BasicAuthenticationSession) getSession()).addWatching(watchTerm);
+
+            values.put("watchTerm", "");
+        }
     }
 
     public final class TextForm extends Form<ValueMap> {
@@ -63,7 +109,6 @@ public class HomePage extends WebPage {
 
             text.setUuid(uuid);
             text.setTextString((String) values.get("textString"));
-            textList.add(0, text);
 
             new Trim().putText(text);
 

@@ -22,6 +22,11 @@
 			<artifactId>wicket-core</artifactId>
 			<version>6.16.0</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.apache.wicket</groupId>
+		    <artifactId>wicket-extensions</artifactId>
+		    <version>6.16.0</version>
+		</dependency>
         <dependency>
             <groupId>org.apache.wicket</groupId>
             <artifactId>wicket-auth-roles</artifactId>
