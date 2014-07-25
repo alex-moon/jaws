@@ -31,10 +31,12 @@ public class Term implements IClusterable {
 
     public Term(String termString, Map<String, AttributeValue> persistedTerm) {
         this.termString = termString;
-        for (String key : persistedTerm.keySet()) {
-            AttributeValue persistedTermValue = persistedTerm.get(key);
-            if (persistedTermValue != null && persistedTermValue.getN() != null) {
-                addCorrelation(key, Double.parseDouble(persistedTermValue.getN()));
+        if (persistedTerm != null) {
+            for (String key : persistedTerm.keySet()) {
+                AttributeValue persistedTermValue = persistedTerm.get(key);
+                if (persistedTermValue != null && persistedTermValue.getN() != null) {
+                    addCorrelation(key, Double.parseDouble(persistedTermValue.getN()));
+                }
             }
         }
     }
