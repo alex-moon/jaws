@@ -14,17 +14,15 @@ import com.amazonaws.services.dynamodbv2.model.GetItemResult;
 
 public class Term implements IClusterable {
     private String termString;
-    private Correlation first;
-    private Correlation second;
-    private Correlation third;
+    private Correlation first, second, third;
 
     private static final String tableName = "Jaws";
     private static final String id = "Term";
 
-    public static List<Term> getWatchTerms(BasicAuthenticationSession session) {
+    public static List<Term> getPersistedTerms(List<String> termStrings) {
         List<Term> result = new LinkedList<Term>();
         Map<String, AttributeValue> persistedTerm = null;
-        for (String termString : session.getWatching()) {
+        for (String termString : termStrings) {
             persistedTerm = fetchPersistedTerm(termString);
             result.add(new Term(termString, persistedTerm));
         }

@@ -41,22 +41,29 @@ public class HomePage extends WebPage {
         add(new WatchForm("watchForm"));
 
         add(new FeedbackPanel("info"));
-        add(new ListView<String>("watching", ((BasicAuthenticationSession) getSession()).getWatching()) {
+        
+        List<String> watchTerms = ((BasicAuthenticationSession) getSession()).getWatching();
+        
+        add(new ListView<String>("watching", watchTerms) {
             public void populateItem(final ListItem<String> item) {
                 final String termString = item.getModelObject();
                 item.add(new Label("termString", termString));
             }
         });
 
-        List<Term> watchTerms = Term.getWatchTerms((BasicAuthenticationSession) getSession());
         add(new Dashboard("dashboard", watchTerms));
 
         add(new TextForm("textForm"));
     }
 
     public final class Dashboard extends DataView<Term> {        
-        public Dashboard(String id, final List<Term> watchTerms) {
-            super(id, new ListDataProvider<Term>(watchTerms));
+        public Dashboard(String id, final List<String> watchTerms) {
+            super(id, new ListDataProvider<Term>() {
+                @Override
+                protected List<Term> getData() {
+                    return Term.getPersistedTerms(watchTerms);
+                }
+            });
         }
 
         @Override
