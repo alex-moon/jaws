@@ -13,7 +13,7 @@ public class Text implements IClusterable {
     }
 
     public Text(Text text) {
-        this.textString = text.textString;
+        this.textString = text.textString.replaceAll("\n", " ");
         this.uuid = text.uuid;
     }
 

@@ -16,7 +16,7 @@ public class Term implements IClusterable {
     private String termString;
     private Correlation first, second, third;
 
-    private static final String tableName = "Jaws";
+    private static final String tableName = System.getProperty("jaws.tablename", "Jaws");
     private static final String id = "Term";
 
     public static List<Term> getPersistedTerms(List<String> termStrings) {
@@ -74,7 +74,7 @@ public class Term implements IClusterable {
         return result.getItem();
     }
 
-    // has to be public to serialise Term :
+    // has to be public to serialise Term :(
     // @todo replace with firstTermString, firstCoefficient etc. on Term
     // @todo map and persist this way instead of long rows
     public class Correlation implements Serializable {

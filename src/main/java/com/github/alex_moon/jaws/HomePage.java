@@ -91,11 +91,8 @@ public class HomePage extends WebPage {
         @Override
         public final void onSubmit() {
             ValueMap values = getModelObject();
-
             String watchTerm = (String) values.get("watchTerm");
-
             ((BasicAuthenticationSession) getSession()).addWatching(watchTerm);
-
             values.put("watchTerm", "");
         }
     }
