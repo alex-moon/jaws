@@ -1,7 +1,7 @@
 Jaws
 ====
 
-Jaws is a simple Wicket application which talks to [Trim](http://www.github.com/alex-moon/trim) and [Amazon DynamoDB](http://aws.amazon.com/dynamodb/) to generate and watch correlated terms in texts.
+Jaws is a simple Wicket application which talks to [Trim](http://www.github.com/alex-moon/trim) and [Amazon DynamoDB](http://aws.amazon.com/dynamodb/) to generate and watch correlated terms in texts. It was explained at a [tech talk at Tangent Snowball which is available online](http://slides.com/formsatz/jaws/).
 
 Setup
 -----
